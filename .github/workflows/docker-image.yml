@@ -15,4 +15,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/francis/test:test
+    - name: Publish to Docker Repository
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: registry.cn-hangzhou.aliyuncs.com/francis/test:test
+        repository: registry.cn-hangzhou.aliyuncs.com
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_semver: true
